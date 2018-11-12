@@ -4,14 +4,21 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class PeopleActivity extends AppCompatActivity {
 
     private static final String TAG = PeopleActivity.class.getSimpleName();
+
+    private PersonAdapter adapter;
+    private PersonGenerator generator = new PersonGenerator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +28,10 @@ public class PeopleActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        initList();
+
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        fab.setOnClickListener(view -> adapter.add(generator.getPerson()));
     }
 
     @Override
@@ -54,5 +62,15 @@ public class PeopleActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.d(TAG, "onDestroy");
         super.onDestroy();
+    }
+
+    private void initList() {
+        RecyclerView rvPersons = findViewById(R.id.rvPersons);
+        rvPersons.setHasFixedSize(true);
+        rvPersons.setLayoutManager(new LinearLayoutManager(this));
+        rvPersons.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        List<Person> people = generator.getPeople(5);
+        adapter = new PersonAdapter(people);
+        rvPersons.setAdapter(adapter);
     }
 }
