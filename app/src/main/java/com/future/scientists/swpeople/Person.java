@@ -5,7 +5,13 @@ import android.os.Parcelable;
 
 import java.util.Objects;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "people")
 public class Person implements Parcelable {
+    @PrimaryKey(autoGenerate = true)
     private long id;
     private String name;
     private String avatar;
@@ -16,6 +22,7 @@ public class Person implements Parcelable {
         this(0, name, avatar, planet, mass);
     }
 
+    @Ignore
     public Person(long id, String name, String avatar, String planet, int mass) {
         this.id = id;
         this.name = name;
@@ -24,6 +31,7 @@ public class Person implements Parcelable {
         this.mass = mass;
     }
 
+    @Ignore
     protected Person(Parcel in) {
         id = in.readLong();
         name = in.readString();

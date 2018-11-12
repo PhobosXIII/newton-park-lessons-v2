@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class PersonActivity extends AppCompatActivity {
 
-    private static final String EXTRA_PERSON = "com.example.phobos.roomtest.extras.EXTRA_PERSON";
+    private static final String EXTRA_PERSON_ID = "com.example.phobos.roomtest.extras.EXTRA_PERSON_ID";
 
-    public static Intent getStartIntent(Context context, Person person){
-        return new Intent(context, PersonActivity.class).putExtra(EXTRA_PERSON, person);
+    public static Intent getStartIntent(Context context, long personId){
+        return new Intent(context, PersonActivity.class).putExtra(EXTRA_PERSON_ID, personId);
     }
 
     @Override
@@ -31,7 +31,8 @@ public class PersonActivity extends AppCompatActivity {
         TextView tvPlanet = findViewById(R.id.tvPlanet);
         TextView tvMass = findViewById(R.id.tvMass);
 
-        final Person person = getIntent().getParcelableExtra(EXTRA_PERSON);
+        final long personId = getIntent().getLongExtra(EXTRA_PERSON_ID, 0);
+        final Person person = AppDatabase.getInstance(this).personDao().getById(personId);
         Picasso.get().load(person.getAvatar())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)

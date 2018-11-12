@@ -32,7 +32,12 @@ public class PeopleActivity extends AppCompatActivity {
         initList();
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> adapter.add(generator.getPerson()));
+        fab.setOnClickListener(view -> {
+            final PersonDao personDao = AppDatabase.getInstance(this).personDao();
+            personDao.insertPerson(generator.getPerson());
+            List<Person> people = personDao.getAll();
+            adapter.update(people);
+        });
     }
 
     @Override
@@ -70,9 +75,9 @@ public class PeopleActivity extends AppCompatActivity {
         rvPersons.setHasFixedSize(true);
         rvPersons.setLayoutManager(new LinearLayoutManager(this));
         rvPersons.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        List<Person> people = generator.getPeople(5);
+        List<Person> people = AppDatabase.getInstance(this).personDao().getAll();
         adapter = new PersonAdapter(people, person -> {
-            final Intent intent = PersonActivity.getStartIntent(this, person);
+            final Intent intent = PersonActivity.getStartIntent(this, person.getId());
             startActivity(intent);
         });
         rvPersons.setAdapter(adapter);
