@@ -1,5 +1,6 @@
 package com.future.scientists.swpeople;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -70,7 +71,10 @@ public class PeopleActivity extends AppCompatActivity {
         rvPersons.setLayoutManager(new LinearLayoutManager(this));
         rvPersons.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         List<Person> people = generator.getPeople(5);
-        adapter = new PersonAdapter(people);
+        adapter = new PersonAdapter(people, person -> {
+            final Intent intent = PersonActivity.getStartIntent(this, person);
+            startActivity(intent);
+        });
         rvPersons.setAdapter(adapter);
     }
 }

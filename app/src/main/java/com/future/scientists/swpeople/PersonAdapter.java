@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder>{
     private List<Person> people;
+    private OnItemClickListener itemClickListener;
 
-    public PersonAdapter(List<Person> people) {
+    public PersonAdapter(List<Person> people, OnItemClickListener itemClickListener) {
         this.people = people;
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -29,7 +31,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
     @Override
     public void onBindViewHolder(@NonNull PersonViewHolder personViewHolder, int position) {
-        personViewHolder.bind(people.get(position));
+        personViewHolder.bind(people.get(position), itemClickListener);
     }
 
     @Override
@@ -48,6 +50,10 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         notifyDataSetChanged();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(Person item);
+    }
+
     public static class PersonViewHolder extends RecyclerView.ViewHolder{
 
         ImageView ivAvatar;
@@ -63,7 +69,9 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
             tvMass = itemView.findViewById(R.id.tvMass);
         }
 
-        public void bind(final Person person){
+        public void bind(final Person person, final OnItemClickListener itemClickListener){
+            itemView.setOnClickListener(v -> itemClickListener.onItemClick(person));
+
             Picasso.get().load(person.getAvatar())
                     .placeholder(R.drawable.ic_launcher_background)
                     .error(R.drawable.ic_launcher_background)
