@@ -71,7 +71,7 @@ public class PeopleActivity extends AppCompatActivity {
     }
 
     private void initList() {
-        RecyclerView rvPersons = findViewById(R.id.rvPersons);
+        RecyclerView rvPersons = findViewById(R.id.rvPeople);
         rvPersons.setHasFixedSize(true);
         rvPersons.setLayoutManager(new LinearLayoutManager(this));
         rvPersons.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));

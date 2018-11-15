@@ -14,7 +14,6 @@ public class PersonGenerator {
             "http://comic-cons.xyz/wp-content/uploads/Star-Wars-avatar-icon-Ewok.png",
             "https://cdn.dribbble.com/users/588874/screenshots/2249423/dribbble_1x.png",
             "https://avatarko.ru/img/kartinka/32/Star_Wars_pistolet_31680.jpg",
-            "http://syromono.info/images/star-wars-clipart-face-8.jpg",
             "http://weclipart.com/gimg/31A72F8B8986D00C/obiwan_kenobi_rots_by_kaal_jhyy.jpg"};
     private static final String[] planets = new String[]{"Alderaan", "Yavin IV", "Stewjon", "Alderaan", "Endor", "Naboo", "Kamino", "Geonosis", "Tatooine"};
     private static final int minMass = 55;
