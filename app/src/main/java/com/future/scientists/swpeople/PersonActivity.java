@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class PersonActivity extends AppCompatActivity {
 
-    private static final String EXTRA_PERSON_ID = "com.example.phobos.roomtest.extras.EXTRA_PERSON_ID";
+    private static final String EXTRA_PERSON_ID = "com.future.scientists.swpeople.extras.EXTRA_PERSON_ID";
 
     public static Intent getStartIntent(Context context, long personId){
         return new Intent(context, PersonActivity.class).putExtra(EXTRA_PERSON_ID, personId);
