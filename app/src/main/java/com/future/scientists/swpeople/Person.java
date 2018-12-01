@@ -17,18 +17,20 @@ public class Person implements Parcelable {
     private String avatar;
     private String planet;
     private int mass;
+    private long birthday;
 
-    public Person(String name, String avatar, String planet, int mass) {
-        this(0, name, avatar, planet, mass);
+    public Person(String name, String avatar, String planet, int mass, long birthday) {
+        this(0, name, avatar, planet, mass, birthday);
     }
 
     @Ignore
-    public Person(long id, String name, String avatar, String planet, int mass) {
+    public Person(long id, String name, String avatar, String planet, int mass, long birthday) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
         this.planet = planet;
         this.mass = mass;
+        this.birthday = birthday;
     }
 
     @Ignore
@@ -38,6 +40,7 @@ public class Person implements Parcelable {
         avatar = in.readString();
         planet = in.readString();
         mass = in.readInt();
+        birthday = in.readLong();
     }
 
     @Override
@@ -47,6 +50,7 @@ public class Person implements Parcelable {
         dest.writeString(avatar);
         dest.writeString(planet);
         dest.writeInt(mass);
+        dest.writeLong(birthday);
     }
 
     @Override
@@ -106,12 +110,22 @@ public class Person implements Parcelable {
         this.mass = mass;
     }
 
+    public long getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(long birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return mass == person.mass &&
+        return id == person.id &&
+                mass == person.mass &&
+                birthday == person.birthday &&
                 Objects.equals(name, person.name) &&
                 Objects.equals(avatar, person.avatar) &&
                 Objects.equals(planet, person.planet);
@@ -119,6 +133,7 @@ public class Person implements Parcelable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, avatar, planet, mass);
+
+        return Objects.hash(id, name, avatar, planet, mass, birthday);
     }
 }

@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class PersonActivity extends AppCompatActivity {
@@ -88,6 +91,7 @@ public class PersonActivity extends AppCompatActivity {
         TextView tvName = findViewById(R.id.tvName);
         TextView tvPlanet = findViewById(R.id.tvPlanet);
         TextView tvMass = findViewById(R.id.tvMass);
+        TextView tvBirthday = findViewById(R.id.tvBirthday);
 
         final long personId = getIntent().getLongExtra(EXTRA_PERSON_ID, 0);
         final Person person = AppDatabase.getInstance(this).personDao().getById(personId);
@@ -100,6 +104,10 @@ public class PersonActivity extends AppCompatActivity {
         tvName.setText(person.getName());
         tvPlanet.setText(person.getPlanet());
         tvMass.setText(String.valueOf(person.getMass()));
+
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy"); // e.g. 24 October 2018
+        Date birthday = new Date(person.getBirthday());
+        tvBirthday.setText(format.format(birthday));
     }
 
     private enum PlayerState {

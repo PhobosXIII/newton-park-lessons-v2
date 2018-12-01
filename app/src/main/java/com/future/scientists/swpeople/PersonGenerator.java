@@ -1,6 +1,7 @@
 package com.future.scientists.swpeople;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -26,7 +27,7 @@ public class PersonGenerator {
         final String avatar = avatars[random.nextInt(avatars.length)];
         final String planet = planets[random.nextInt(planets.length)];
         final int mass = minMass + random.nextInt(maxMass - minMass + 1);
-        return new Person(name, avatar, planet, mass);
+        return new Person(name, avatar, planet, mass, new Date().getTime());
     }
 
     public List<Person> getPeople(final int count){
