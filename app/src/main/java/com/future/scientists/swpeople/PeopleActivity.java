@@ -33,10 +33,8 @@ public class PeopleActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            final PersonDao personDao = AppDatabase.getInstance(this).personDao();
-            personDao.insertPerson(generator.getPerson());
-            List<Person> people = personDao.getAll();
-            adapter.update(people);
+            final Intent intent = AddPersonActivity.getStartIntent(this);
+            startActivity(intent);
         });
     }
 
@@ -44,6 +42,7 @@ public class PeopleActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
+        updateList();
     }
 
     @Override
@@ -68,6 +67,11 @@ public class PeopleActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.d(TAG, "onDestroy");
         super.onDestroy();
+    }
+
+    private void updateList() {
+        List<Person> people = AppDatabase.getInstance(this).personDao().getAll();
+        adapter.update(people);
     }
 
     private void initList() {

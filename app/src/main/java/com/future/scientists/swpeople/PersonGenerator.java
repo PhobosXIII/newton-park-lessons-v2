@@ -13,8 +13,7 @@ public class PersonGenerator {
             "https://yt3.ggpht.com/a-/AJLlDp13bM8yFuEE7HVlYHFt7zvZPSMWbGEz4OrxOw=s900-mo-c-c0xffffffff-rj-k-no",
             "http://comic-cons.xyz/wp-content/uploads/Star-Wars-avatar-icon-Ewok.png",
             "https://cdn.dribbble.com/users/588874/screenshots/2249423/dribbble_1x.png",
-            "https://avatarko.ru/img/kartinka/32/Star_Wars_pistolet_31680.jpg",
-            "http://weclipart.com/gimg/31A72F8B8986D00C/obiwan_kenobi_rots_by_kaal_jhyy.jpg"};
+            "https://avatarko.ru/img/kartinka/32/Star_Wars_pistolet_31680.jpg"};
     private static final String[] planets = new String[]{"Alderaan", "Yavin IV", "Stewjon", "Alderaan", "Endor", "Naboo", "Kamino", "Geonosis", "Tatooine"};
     private static final int minMass = 55;
     private static final int maxMass = 110;
@@ -35,5 +34,9 @@ public class PersonGenerator {
             people.add(getPerson());
         }
         return people;
+    }
+
+    public String getAvatarLink(){
+        return avatars[random.nextInt(avatars.length)];
     }
 }
