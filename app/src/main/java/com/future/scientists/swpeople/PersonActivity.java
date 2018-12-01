@@ -2,10 +2,12 @@ package com.future.scientists.swpeople;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +16,12 @@ public class PersonActivity extends AppCompatActivity {
 
     private static final String EXTRA_PERSON_ID = "com.future.scientists.swpeople.extras.EXTRA_PERSON_ID";
 
-    public static Intent getStartIntent(Context context, long personId){
+    private FloatingActionButton fab;
+    private MediaPlayer mediaPlayer;
+    private PersonGenerator generator = new PersonGenerator();
+    private PlayerState playerState;
+
+    public static Intent getStartIntent(Context context, long personId) {
         return new Intent(context, PersonActivity.class).putExtra(EXTRA_PERSON_ID, personId);
     }
 
@@ -23,6 +30,57 @@ public class PersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
         initUi();
+        initFab();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        playerState = PlayerState.STOPPED;
+        updateFabUi();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    private void initFab() {
+        fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(view -> {
+            if (PlayerState.STARTED.equals(playerState)) {
+                stopPlayer();
+            } else {
+                startPlayer();
+            }
+        });
+    }
+
+    private void startPlayer() {
+        mediaPlayer = MediaPlayer.create(this, generator.getSound());
+        mediaPlayer.start();
+        mediaPlayer.setOnCompletionListener(mp -> stopPlayer());
+        playerState = PlayerState.STARTED;
+        updateFabUi();
+    }
+
+    private void stopPlayer() {
+        mediaPlayer.stop();
+        playerState = PlayerState.STOPPED;
+        updateFabUi();
+    }
+
+    private void updateFabUi() {
+        if (PlayerState.STARTED.equals(playerState)) {
+            fab.setImageResource(R.drawable.ic_stop_black_24dp);
+        } else {
+            fab.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+        }
     }
 
     private void initUi() {
@@ -42,5 +100,10 @@ public class PersonActivity extends AppCompatActivity {
         tvName.setText(person.getName());
         tvPlanet.setText(person.getPlanet());
         tvMass.setText(String.valueOf(person.getMass()));
+    }
+
+    private enum PlayerState {
+        STARTED,
+        STOPPED
     }
 }

@@ -14,12 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AddPersonActivity extends AppCompatActivity {
 
-    ImageView ivAvatar;
-    TextInputLayout tilName;
-    TextInputLayout tilPlanet;
-    TextInputLayout tilMass;
-    PersonGenerator generator = new PersonGenerator();
-    String avatarLink = "";
+    private ImageView ivAvatar;
+    private TextInputLayout tilName;
+    private TextInputLayout tilPlanet;
+    private TextInputLayout tilMass;
+    private PersonGenerator generator = new PersonGenerator();
+    private String avatarLink = "";
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, AddPersonActivity.class);

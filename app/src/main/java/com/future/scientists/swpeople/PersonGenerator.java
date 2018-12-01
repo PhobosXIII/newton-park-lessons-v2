@@ -17,6 +17,7 @@ public class PersonGenerator {
     private static final String[] planets = new String[]{"Alderaan", "Yavin IV", "Stewjon", "Alderaan", "Endor", "Naboo", "Kamino", "Geonosis", "Tatooine"};
     private static final int minMass = 55;
     private static final int maxMass = 110;
+    private static final int[] sounds = new int[]{R.raw.sound_14749, R.raw.sound_14769, R.raw.sound_15260, R.raw.sound_15261};
 
     private Random random = new Random();
 
@@ -38,5 +39,9 @@ public class PersonGenerator {
 
     public String getAvatarLink(){
         return avatars[random.nextInt(avatars.length)];
+    }
+
+    public int getSound(){
+        return sounds[random.nextInt(sounds.length)];
     }
 }
